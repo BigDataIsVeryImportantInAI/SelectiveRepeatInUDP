@@ -33,8 +33,10 @@
 
 >* FSM 작성하여 해당 프로토콜의 어떻게 돌아가는지 이해를 도움
 
+>* 송신자측(client) Finite State Machine
 >![클라이언트 FSM](/image/fsm_client.png)
 
+>* 수신자측(server) Finite State Machine
 >![클라이언트 FSM](/image/fsm_server.png)
 
 
@@ -47,6 +49,31 @@
 
 >* 담당분야 : 출력을 제외한 소켓 통신, SelectiveRepeat 알고리즘 구현
 
->* 실행화면
+----
+## 실행화면
 
->![실행화면](/image/image7.png)
+>* Client
+
+>![실행화면](/image/res1.png)
+
+>* WINDOW_SIZE는 3으로 최초 전송이 3개까지 가능하다. 그 이후 0번 ACK를 받아 base값이 증가했을 때 WINDOW가 옮겨져 3번 패킷을 보낼 수 있다.
+
+>![실행화면](/image/res2.png)
+
+>* 3번 패킷을 보낼 때 오류를 가정해 엉뚱한 순서의 패킷을 보내었다. 그 결과로 4번 패킷과 5번 패킷은 ACK를 받았지만 3번 패킷의 경우 ACK를 받지 못하였다. 시간이 흐른 뒤 3번 패킷의 타이머가 동작해 3번 패킷을 재전송하고 ACK를 받는 모습이 보인다.
+
+
+>![실행화면](/image/res3.png)
+
+>* 그 후 WINDOW_SIZE만큼 다시 패킷을 보내고 순서대로 ACK를 받는 모습을 확인할 수 있다.
+
+>* Server
+
+>![실행화면](/image/res4.png)
+
+>* 서버쪽 결과화면이다. 패킷을 받을경우 WINDOW 안의 패킷을 받으면 ACK를 보내고 색이 바바뀌는 것 알 수 있다.
+
+>![실행화면](/image/res5.png)
+
+>* 클라이언트측에서 3번 패킷을 보낼 때 데이터가 오류가 발생해 100번 패킷을 보낸다. Timeout이후 3번 패킷을 재전송하는 것을 받아 ACK를 보내주었다.
+
